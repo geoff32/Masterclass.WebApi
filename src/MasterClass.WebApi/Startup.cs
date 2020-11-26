@@ -45,12 +45,13 @@ namespace MasterClass.WebApi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MasterClass.WebApi v1"));
             }
 
             app.UseMiddleware<TrackMachineMiddleware>();
             app.UseHttpsRedirection();
+            
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MasterClass.WebApi v1"));
 
             app.UseRouting();
             app.UseMiddleware<TrackRequestContextMiddleware>();
