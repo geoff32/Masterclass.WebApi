@@ -1,0 +1,43 @@
+{
+    "MockUsers": {
+        "Users": [{
+            "Id": 1,
+            "Login": "login1",
+            "Password": "pwd1",
+            "Name": "name1",
+            "BirthDate": "01/01/1990",
+            "Roles": [
+                "SuperAdmin",
+                "Admin",
+                "User"
+            ],
+            "Rights": [
+            ]
+        },
+        {
+            "Id": 2,
+            "Login": "login2",
+            "Password": "pwd2",
+            "Name": "name2",
+            "BirthDate": "01/01/1995",
+            "Roles": [
+                "Admin",
+                "User"
+            ],
+            "Rights": [
+            ]
+        },
+        {
+            "Id": 3,
+            "Login": "login3",
+            "Password": "pwd3",
+            "Name": "name3",
+            "BirthDate": "01/01/2005",
+            "Roles": [
+                "User"
+            ],
+            "Rights": [
+            ]
+        }]
+    }
+}  

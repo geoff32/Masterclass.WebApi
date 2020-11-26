@@ -1,3 +1,4 @@
+using MasterClass.WebApi.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Serilog;
@@ -17,6 +18,7 @@ namespace MasterClass.WebApi
                 {
                     webBuilder.UseStartup<Startup>();
                 })
-                .UseSerilog(configureLogger: (hostContext, loggerConfig) => loggerConfig.ReadFrom.Configuration(hostContext.Configuration));
+                .UseSerilog(configureLogger: (hostContext, loggerConfig) => loggerConfig.ReadFrom.Configuration(hostContext.Configuration))
+                .UseMockFiles();
     }
 }
