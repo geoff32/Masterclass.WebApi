@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MasterClass.WebApi.Context;
 using MasterClass.WebApi.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -33,6 +34,7 @@ namespace MasterClass.WebApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MasterClass.WebApi", Version = "v1" });
             });
+            services.AddScoped<IApplicationRequestContext, ApplicationRequestContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,7 +51,7 @@ namespace MasterClass.WebApi
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseMiddleware<TrackRequestContextMiddleware>();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
