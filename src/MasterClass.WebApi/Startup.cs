@@ -34,7 +34,7 @@ namespace MasterClass.WebApi
             
             services.ConfigureMock(Configuration);
 
-            services.AddMasterClassJwt(Configuration);
+            services.AddMasterClassAuthentication(Configuration);
 
             services.AddRepository();
             services.AddBusiness();

@@ -1,4 +1,5 @@
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using MasterClass.Business.Abstractions.Users;
 using MasterClass.Core.Options;
 using MasterClass.Core.Tools;
@@ -41,6 +42,12 @@ namespace MasterClass.Service.Users
                 return AuthenticatedUser.Create(user, jwtToken == null ? null : new JwtSecurityTokenHandler().WriteToken(jwtToken));
             }
             return null;
+        }
+
+        public ClaimsPrincipal SignIn(AuthenticateParameters authParams, string scheme)
+        {
+            var user = _userBusiness.AuthenticateUser(authParams.Login, authParams.Password);
+            return user == null ? null : user.GetClaimsPrincipal(scheme);
         }
     }
 }
