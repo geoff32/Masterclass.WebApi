@@ -12,10 +12,13 @@ namespace MasterClass.WebApi.Controllers
         public UserController(IUserService userService) => _userService = userService;
 
         [HttpPost, Route("authenticate")]
-        public IActionResult Authenticate([FromBody]AuthenticateParameters authParams)
+        public IActionResult Authenticate([FromBody] AuthenticateParameters authParams)
         {
             var authUser = _userService.Authenticate(authParams);
             return authUser == null ? (IActionResult)Unauthorized() : Ok(authUser);
         }
+        
+        [HttpGet]
+        public IActionResult GetContext() => Ok(new { Id = User.Identity.Name });
     }
 }

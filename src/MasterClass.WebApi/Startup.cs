@@ -34,6 +34,8 @@ namespace MasterClass.WebApi
             
             services.ConfigureMock(Configuration);
 
+            services.AddMasterClassJwt(Configuration);
+
             services.AddRepository();
             services.AddBusiness();
             services.AddService();
@@ -47,6 +49,7 @@ namespace MasterClass.WebApi
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseAuthentication();
             app.UseMiddleware<TrackMachineMiddleware>();
             app.UseHttpsRedirection();
 
