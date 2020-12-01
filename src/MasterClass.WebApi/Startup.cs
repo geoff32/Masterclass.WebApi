@@ -1,23 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using MasterClass.Business.DependencyInjection.Extensions;
 using MasterClass.Core.Options;
 using MasterClass.Repository.DependencyInjection.Extensions;
+using MasterClass.WebApi.Configuration;
 using MasterClass.WebApi.Context;
 using MasterClass.WebApi.DependencyInjection.Extensions;
 using MasterClass.WebApi.Middlewares;
 using MasterClass.WebApi.StartupExtensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
 
 namespace MasterClass.WebApi
 {
@@ -35,10 +28,7 @@ namespace MasterClass.WebApi
         {
 
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "MasterClass.WebApi", Version = "v1" });
-            });
+            services.AddMasterClassSwagger();
             services.Configure<DiagnosticOptions>(Configuration.GetSection("Diagnostic"));
             services.AddScoped<IApplicationRequestContext, ApplicationRequestContext>();
             
@@ -60,8 +50,7 @@ namespace MasterClass.WebApi
             app.UseMiddleware<TrackMachineMiddleware>();
             app.UseHttpsRedirection();
 
-            app.UseSwagger();
-            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MasterClass.WebApi v1"));
+            app.UseMasterClassSwaggerUI();
 
             app.UseRouting();
             app.UseMiddleware<TrackRequestContextMiddleware>();
