@@ -24,7 +24,7 @@ namespace MasterClass.WebApi.DependencyInjection.Extensions
             if (authenticationSchemes.Count > 1)
             {
                 services
-                    .AddAuthentication(options => options.DefaultAuthenticateScheme = DEFAULT_AUTHENTICATE_SCHEME)
+                    .AddAuthentication(options => options.DefaultAuthenticateScheme = options.DefaultChallengeScheme = DEFAULT_AUTHENTICATE_SCHEME)
                     .AddPolicyScheme(DEFAULT_AUTHENTICATE_SCHEME, DEFAULT_AUTHENTICATE_SCHEME,
                         options => options.ForwardDefaultSelector = context => GetAuthenticateScheme(context, authenticationSchemes));
             }
@@ -70,7 +70,7 @@ namespace MasterClass.WebApi.DependencyInjection.Extensions
             if (jwtOptions?.Enabled ?? false)
             {
                 services
-                    .AddAuthentication(options => options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme)
+                    .AddAuthentication(options => options.DefaultAuthenticateScheme = options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options =>
                     {
                         options.TokenValidationParameters = new TokenValidationParameters
@@ -100,6 +100,7 @@ namespace MasterClass.WebApi.DependencyInjection.Extensions
                 services
                     .AddAuthentication(options =>
                         options.DefaultAuthenticateScheme
+                            = options.DefaultChallengeScheme
                             = options.DefaultSignInScheme
                             = options.DefaultSignOutScheme
                             = CookieAuthenticationDefaults.AuthenticationScheme)
