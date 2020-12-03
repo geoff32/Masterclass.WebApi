@@ -1,0 +1,6 @@
+version: '3.4'
+
+services:
+  masterclasswebapi:
+    volumes:
+      - $USERPROFILE/$CERT_PATH:/https

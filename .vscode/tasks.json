@@ -37,6 +37,90 @@
                 "/consoleloggerparameters:NoSummary"
             ],
             "problemMatcher": "$msCompile"
+        },
+        {
+            "type": "docker-build",
+            "label": "docker-build: debug",
+            "dependsOn": [
+                "build"
+            ],
+            "dockerBuild": {
+                "tag": "masterclass:dev",
+                "target": "base",
+                "dockerfile": "${workspaceFolder}/src/MasterClass.WebApi/Dockerfile",
+                "context": "${workspaceFolder}",
+                "pull": true
+            },
+            "netCore": {
+                "appProject": "${workspaceFolder}/src/MasterClass.WebApi/MasterClass.WebApi.csproj"
+            }
+        },
+        {
+            "type": "docker-build",
+            "label": "docker-build: release",
+            "dependsOn": [
+                "build"
+            ],
+            "dockerBuild": {
+                "tag": "masterclass:latest",
+                "dockerfile": "${workspaceFolder}/src/MasterClass.WebApi/Dockerfile",
+                "context": "${workspaceFolder}",
+                "pull": true
+            },
+            "netCore": {
+                "appProject": "${workspaceFolder}/src/MasterClass.WebApi/MasterClass.WebApi.csproj"
+            }
+        },
+        {
+            "type": "docker-run",
+            "label": "docker-run: debug",
+            "dependsOn": [
+                "docker-build: debug"
+            ],
+            "dockerRun": {
+                "envFiles": [
+                    "${workspaceFolder}/.env"
+                ],
+                "volumes": [{
+                    "containerPath": "/https",
+                    "localPath": "$USERPROFILE/.masterclass/https"
+                }]
+            },
+            "netCore": {
+                "appProject": "${workspaceFolder}/src/MasterClass.WebApi/MasterClass.WebApi.csproj",
+                "enableDebugging": true
+            }
+        },
+        {
+            "type": "docker-run",
+            "label": "docker-run: osx-debug",
+            "dependsOn": [
+                "docker-build: debug"
+            ],
+            "dockerRun": {
+                "envFiles": [
+                    "${workspaceFolder}/.env"
+                ],
+                "volumes": [{
+                    "containerPath": "/https",
+                    "localPath": "$HOME/.masterclass/https"
+                }]
+            },
+            "netCore": {
+                "appProject": "${workspaceFolder}/src/MasterClass.WebApi/MasterClass.WebApi.csproj",
+                "enableDebugging": true
+            }
+        },
+        {
+            "type": "docker-run",
+            "label": "docker-run: release",
+            "dependsOn": [
+                "docker-build: release"
+            ],
+            "dockerRun": {},
+            "netCore": {
+                "appProject": "${workspaceFolder}/src/MasterClass.WebApi/MasterClass.WebApi.csproj"
+            }
         }
     ]
 }
