@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using MasterClass.Service.Abstractions.Users;
 using MasterClass.Service.Models.Users;
+using MasterClass.WebApi.Authorization.Policy;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -22,7 +23,7 @@ namespace MasterClass.WebApi.Controllers
             return authUser == null ? (IActionResult)Unauthorized() : Ok(authUser);
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Policy = Policies.REQUIRED_SUPERADMIN_ROLE)]
         public IActionResult GetContext() => Ok(new { Id = User.Identity.Name });
 
         [HttpPost("signin"), AllowAnonymous]
