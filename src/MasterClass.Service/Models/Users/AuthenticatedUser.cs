@@ -1,8 +1,9 @@
 using MasterClass.Repository.Models.Users;
+using MasterClass.Service.Abstractions.Models.Users;
 
 namespace MasterClass.Service.Models.Users
 {
-    public class AuthenticatedUser
+    public class AuthenticatedUser : IAuthenticatedUser
     {
         public int Id { get; }
         public string Token { get; }

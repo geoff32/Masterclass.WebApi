@@ -3,6 +3,7 @@ using System.Security.Claims;
 using MasterClass.Business.Abstractions.Users;
 using MasterClass.Core.Options;
 using MasterClass.Core.Tools;
+using MasterClass.Service.Abstractions.Models.Users;
 using MasterClass.Service.Abstractions.Users;
 using MasterClass.Service.Identity;
 using MasterClass.Service.Models.Users;
@@ -25,7 +26,7 @@ namespace MasterClass.Service.Users
             _clock = clock;
         }
 
-        public AuthenticatedUser Authenticate(AuthenticateParameters authParams)
+        public IAuthenticatedUser Authenticate(AuthenticateParameters authParams)
         {
             var user = _userBusiness.AuthenticateUser(authParams.Login, authParams.Password);
             if (user != null)
